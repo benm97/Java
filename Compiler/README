@@ -1,0 +1,73 @@
+maayanna
+benm
+
+
+=============================
+=      File description     =
+=============================
+Package oop.ex6 :
+
+    Patterns.java - This class contains all the patterns we need to check (in all the packages).
+
+    Package main :
+            Sjavac.java - This is the main class of our program, our manager class, containing the main method.
+
+
+    Package method :
+            Method.java - This class is the representing class of a method containing the name of the method,
+                          its parameters and its method code.
+            MethodException.java - The class method exception is creating in case of a illegal problem
+                                   during creating a method.
+            ParseMethod.java - This ParseMethod Class is a class parsing all line contains in the method cod of
+                              one method.
+
+
+    Package structure :
+            ParseStructure.java - This class is parsing all the file and checks the structure.
+            StructureException.java - A structure exception is creating in case of a bad file structure.
+
+    Package variable :
+            ParseVariable.java - This class is checking the legalness of a varible.
+            Variable.java - A variable class.
+            VariableException.java - A variable exception is creating during a bad variable utilistaion or bad
+                                     declaration or a bad assignment.
+
+
+=============================
+=          Design           =
+=============================
+(6.1 quest)
+We learned in class that the exceptions must be throwed in the same module they are into.
+We decided then to create a MethodException in the package method and another one (StructureException) in the structure
+package. On the same thought, we created a VariableException in the variable package.
+
+(6.2 quest)
+We divided our program in three different modules.
+The first module, the Sjavac is handling the received arguments and runs the whole program.
+We can call the Sjavac a Manager Class.
+The second module, The ParseStructure is dealing with the analysis of the given file.
+In fact, it check all lines and then creates methods(not checked yet) and legal variables.
+Like that, our advantage is to use the principe of the modularity : The ParseStructure does'nt need to
+create a legal method and to check every line of our methods.
+Our third module, the ParseMethod is analyzing every line of a method, checking every created block and verifying
+the legality of every created variable in any possible block.
+
+We used the open-closed principle, in fact we use in our code some switch (single choice principle) and static
+methods, allowing us to adding new method and new line without changing our old code or changing the structure.
+In fact, if the Sjavac wants to check some new conditions, it can just add new whole method and add it in the switch or
+if structures.
+
+We also used the modular decomposability by using a simple structure with our packages and by separating
+our classes (Every package has a defined role and when using it, we don't have the obligation to alert it of all
+that happend before)
+
+(6.3 quest)
+One of our pattern is the Variable Name Pattern: "([a-zA-Z]\\w*|_\\w+)"
+In fact a variable name starts can start with:
+-A letter (a-zA-Z). In this case we can have many letters, digits, or underscores after that,
+but possibly none of it (a one letter name) so *
+-An underscore. In this case we can have many letters, digits, or underscores after that, but at least one so +.
+
+An other pattern is the Int pattern: "-?[0-9]+"
+A int can be negative so we start with one or none '-', so ?/
+Then we have at least a digits, but possibly many so +.
