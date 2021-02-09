@@ -1,0 +1,77 @@
+benm
+danou0301
+
+
+=============================
+=      File description     =
+=============================
+
+- package filesprocessing :
+DirectoryProcessor.java: contains the main method.
+Parse.java : who parse the command file to a section object.
+Section.java : who groups a filter object, order object and warnings messages.
+TypeOneException.java: exception that doesn't stop the program.
+TypeTwoException.java: exception that stop the program.
+ExceptionIO.java: IO Exception
+WrongsArgsException.java: exception in the arguments
+BadFormatException.java: bad format of the command file
+
+- package filters :
+FilterFactory.java : create object that implement the apply method
+Filter.java : who filtrate files with the apply method.
+AllFilter.java, GreaterThanFilter.java, BetweenFilter.java, SmallerThanFilter.java, FileFilter.java,
+ContainsFilter.java, PrefixFilter.java, SuffixFilter.java, WritableFilter.java, executableFilter.java,
+HiddenFilter.java : implement the apply method of the right filter.
+BadFilterNameException.java:
+BadPermissionArgException.java:
+NegativeParametersException.java:
+BoundsException.java:
+
+- package orders :
+OrderFactory.java: create object that implement the compare method
+Order.java: abstract class that implement compare method
+AbsoluteOrder.java, SizeOrder.java, TypeOrder.java: implement compare method
+BadOrderNameException.java:
+
+
+=============================
+=  Implementation details   =
+=============================
+1. Explain all your design choices in detail.
+
+First we collect all the information of the commend file with our parse object. And for each block of
+(FILTER/ORDER) we create an object Section. That groups an Filter object and an Order object.
+We have build two factory: filterFactory and orderFactory that create object (extends of Filter or Order)
+who implement filter method or order method.
+And finally run on the directoryProcessor these methods for each section and print the result.
+
+We create different class for the different filters according to the Modularity and Single Choice principle,
+then when we want to add on other filter we have just need to create a new filter class and add one case in the
+Filter factory (same for Order Factory).
+The exception classes will be explained in the next question.
+
+
+2.Describe the exceptions hierarchy you used in order to handle errors in the program. Explain the
+considerations that made you choose that specific design.
+
+We have implemented two father class TypeOneException and TypeTwoException:
+- Type one exceptions are thrown by the factories, and caught by Parse, who there build an error message:
+"Warning in line X" that is given to the current Section object. And printed on the DirectoryProcessor.
+Every type one exception generates the same message, so we don't need to define a specific one for each class.
+- Type two exceptions are caught by the main method that prints "ERROR" followed by a message specific to each
+exception. It stops the program. It is logical to catch them in the main method since it needs to know when
+the program should be stopped.
+And all the other exception classes extend one of these two classes since there is a relation of is-a.
+We have put this two methods on the filesprocessing package because they are caught there. And other Exception
+class where they are thrown.
+
+
+3. How did you sort your matched files ? Did you use a data structure for this purpose ? If so, what
+data structure and why ?
+We decided to put the files in a Java ArrayList. It makes filtering and sorting very easy.
+Because first we don't have to define the size when creating it, and that allows us to add as much files as we
+want. And second our order objects are implementing method compare from Comparator that sorts a given
+ArrayList with our method.
+
+
+
