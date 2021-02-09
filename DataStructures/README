@@ -1,0 +1,130 @@
+benm
+
+benjamin maman
+
+
+=============================
+=      File description     =
+=============================
+1-SimpleHashSet.java: abstract class that implements SimpleSet
+2-OpenHashSet.java: a chaining hashset that extends SimpleHashSet
+3-ClosedHashSet.java : a closed hashing hashset (with quadratic probing) that extends SimpleHashSet
+4-CollectionFacadeSet.java: wraps an underlying Collection and serves both to simplify its API and it
+a common type with the implemented SimpleHashSets
+5-MyLinkedList.java: holds a linkedList of strings
+
+
+=============================
+=  Implementation details   =
+=============================
+-OpenHashSet: When the openSet wants to add an element it finds the free index with the clamp function, then creates
+a new MyLinkedList object if there was not already a LinkedList with elements in this index. In this case, it adds
+the new element at the end of the LinkedList.
+-ClosedHashSet: When the closedSet deletes an element we define a string object "deleted" to replace it in the table.
+When we want to add/contain/delete we have to check equality between the strings with ==.
+
+
+================
+=    Results   =
+================
+#These values correspond to the time it takes (in ms) to insert data1 to all data structures
+OpenHashSet_AddData1 = 61321
+ClosedHashSet_AddData1 = 155398
+TreeSet_AddData1 = 59
+LinkedList_AddData1 = 50921
+HashSet_AddData1 = 46 *fastest*
+
+#These values correspond to the time it takes (in ms) to insert data2 to all data structures
+OpenHashSet_AddData2 = 30
+ClosedHashSet_AddData2 = 16
+TreeSet_AddData2 = 32
+LinkedList_AddData2 = 16005
+HashSet_AddData2 = 4 *fastest*
+
+#Comparing
+OpenHashSet: data2 fastest
+ClosedHashSet: data2 fastest
+TreeSet: data2 fastest
+LinkedList: data1 fastest
+HashSet: 4 fastest
+
+#These values correspond to the time it takes (in ns) to check if "hi" is contained in
+#the data structures initialized with data1
+OpenHashSet_Contains_hi1 = 41 *fastest*
+ClosedHashSet_Contains_hi1 = 74
+TreeSet_Contains_hi1 = 106
+LinkedList_Contains_hi1 = 1017247
+HashSet_Contains_hi1 = 74
+
+#These values correspond to the time it takes (in ns) to check if "-13170890158" is contained in
+#the data structures initialized with data1
+OpenHashSet_Contains_negative = 40585
+ClosedHashSet_Contains_negative = 1296333
+TreeSet_Contains_negative = 139
+LinkedList_Contains_negative = 1120338
+HashSet_Contains_negative = 76 *fastest*
+
+#Comparing
+OpenHashSet: hi fastest
+ClosedHashSet: hi fastest
+TreeSet: hi fastest
+LinkedList: hi fastest
+HashSet: hi fastest
+
+#These values correspond to the time it takes (in ns) to check if "23" is contained in
+#the data structures initialized with data2
+OpenHashSet_Contains_23 = 29
+ClosedHashSet_Contains_23 = 40
+TreeSet_Contains_23 = 57
+LinkedList_Contains_23 =101
+HashSet_Contains_23 = 28 *fastest*
+
+#These values correspond to the time it takes (in ns) to check if "hi" is contained in
+#the data structures initialized with data2
+OpenHashSet_Contains_hi2 = 15
+ClosedHashSet_Contains_hi2 = 36
+TreeSet_Contains_hi2 = 66
+LinkedList_Contains_hi2 = 385312
+HashSet_Contains_hi2 = 18 *fastest*
+
+#Comparing
+OpenHashSet: hi fastest
+ClosedHashSet: hi fastest
+TreeSet: 23 fastest
+LinkedList: 23 fastest
+HashSet: hi fastest
+
+I chose a warm up of 70000
+============================
+=   Answers to questions   =
+============================
+Bad results for data1.txt:
+- OpenHashSet: insert value/contains of "-13170890158"
+- ClosedHahSet: insert value/contains of "-13170890158"
+
+Q : Summarize the strengths and weaknesses of each of the data structures as reflected by
+the results. Which would you use for which purposes?
+A: The worst data structure is the Java’s LinkedList.
+The most effective data structures for adding is Java's TreeSet and for searching is Java's HashSet.
+Java's TreeSet and HashSet are the most effective regarding the running time so I will use them.
+
+Q: How did your two implementations compare between themselves ?
+A: In general openHash is more effective.
+In data1 the implementations are more or less equivalent.
+In data2 Open is better than Closed.
+
+Q :How did your implementations compare to Java’s built in HashSet?
+A : HashSet is better in adding data1 and in contains "-13170890158" with data1. In the others they are equivalent
+
+Q: What results surprised you and which did you expect?
+A: I was surprise by the running time of the Java's LinkedList, I expected better results.
+I was not surprise by the long time it took to add data1 to my implementations and to search "-13170890158".
+
+Q: Did you find javas HashSet performance on data1.txt surprising? Can you explain it? Can google?
+(no penalty if you leave this empty)
+A: I was surprise for the short time it takes to insert data with the same hashCode and I expected it took very much
+time in clamping and rehashing the table also if it's not the same hashCode.
+
+Q: If you tried clamping expressions to valid indices in more than one way, what were they and how significant
+was the speed-up?
+A: it was not a significant speed-up
